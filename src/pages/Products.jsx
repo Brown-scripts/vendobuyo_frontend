@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import client from '../api/client';
 
 function Products() {
   const [products, setProducts] = useState([]);
