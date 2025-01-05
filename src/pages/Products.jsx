@@ -11,7 +11,12 @@ function Products() {
     try {
       setLoading(true);
       setError(null);
-      const response = await client.get("/api/products");
+      const token = localStorage.getItem("token");
+        const response = await client.get("/api/products", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       // Assuming the data you want is in response.data
       setProducts(response.data);
