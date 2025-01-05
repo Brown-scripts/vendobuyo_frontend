@@ -12,7 +12,11 @@ function ProductDetail() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const response = await client.get(`/api/products/${id}`);
+        const response = await client.get(`/api/products/${id}`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         // Assuming the data you want is in response.data
         setProduct(response.data);
