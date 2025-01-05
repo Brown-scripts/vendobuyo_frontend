@@ -26,7 +26,7 @@ VendoBuyo is a distributed system built using a microservices architecture. It i
 
 Below is an overview of the architecture for VendoBuyo:
 
-![VendoBuyo Architecture](https://via.placeholder.com/800x400?text=Architecture+Diagram+Placeholder)
+![VendoBuyo Architecture](image.png)
 
 **Components:**
 - **Frontend**: This repository, developed using React, serves as the user-facing interface.
