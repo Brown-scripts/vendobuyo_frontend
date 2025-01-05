@@ -12,6 +12,7 @@ function ProductDetail() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
+        const token = localStorage.getItem("token");
         const response = await client.get(`/api/products/${id}`,{
           headers: {
             Authorization: `Bearer ${token}`,
