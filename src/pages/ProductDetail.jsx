@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import client from '../api/client';
+import { useCart } from "../context/CartContext";
 
 function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToCart } = useCart()
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-        const response = await client.get(`/api/products/${id}`,{
+        const response = await client.get(`/api/products/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -76,7 +79,7 @@ function ProductDetail() {
           </span>
         </p>
       </div>
-      <button className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition duration-300">
+      <button onClick={() => { addToCart(product); navigate("/cart") }} className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition duration-300">
         Add to Cart
       </button>
     </div>

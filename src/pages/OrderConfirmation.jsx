@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 
 function OrderConfirmation() {
   const location = useLocation();
-  const { orderId } = location.state || {};
+  const { orderId } = location.state || null;
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-200 shadow-md rounded-lg text-center">
@@ -22,7 +22,7 @@ function OrderConfirmation() {
         <p className="text-lg text-red-600 mb-6">No order information available.</p>
       )}
       <Link
-        to="/"
+        to="/products"
         className="inline-block px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition duration-300"
       >
         Continue Shopping

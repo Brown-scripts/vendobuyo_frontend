@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -13,30 +13,86 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import SellerDashboard from './pages/SellerDashboard';
 import { CartProvider } from './context/CartContext';
 import './index.css';
+import UserContext from './context/UserContext';
+import { ROLES } from './utils/constants';
 
 function App() {
+  const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState(null)
+  const [userProfile, setUserProfile] = useState(null)
+
+  const fetchUserProfile = async (token) => {
+    setLoading(true)
+    try {
+      const response = await client.get("/api/auth/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // Assuming the user data is in response.data
+      setUserProfile(response.data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      setError("Failed to load user profile. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      setUser(token)
+      fetchUserProfile(token)
+    }
+  }, [])
+
+  if (loading) {
+    <div className='text-center mt-10'>Loading, Please wait..</div>
+  }
+
   return (
-    <CartProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-100">
-          <Navbar />
-          <main className="container mx-auto px-4 py-8">
+    <UserContext.Provider value={{ user, setUser, userProfile, setUserProfile }}>
+      <CartProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen bg-gray-100">
+            <div className="absolute z-[10]" id="modal-root"></div>
+            <Navbar />
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:id" element={<ProductDetail />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order-confirmation" element={<OrderConfirmation />} />
-              <Route path="/seller-dashboard" element={<SellerDashboard />} />
+              {
+                user ?
+                  <>
+                    {
+                      userProfile?.role == ROLES.buyer ?
+                        <>
+                          <Route path="/products" element={<Products />} />
+                          <Route path="/products/:id" element={<ProductDetail />} />
+                          <Route path="/profile" element={<Profile />} />
+                          <Route path="/cart" element={<Cart />} />
+                          <Route path="/checkout" element={<Checkout />} />
+                          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                          <Route path="*" element={<Navigate to={"/products"} />} />
+                        </> :
+                        <>
+                          <Route path="/seller-dashboard" element={<SellerDashboard />} />
+                          <Route path="*" element={<Navigate to={"/seller-dashboard"} />} />
+                        </>
+                    }
+                  </>
+                  :
+                  <>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="*" element={<Navigate to={"/"} />} />
+                  </>
+
+              }
             </Routes>
-          </main>
-        </div>
-      </Router>
-    </CartProvider>
+          </div>
+        </Router>
+      </CartProvider>
+    </UserContext.Provider>
   );
 }
 

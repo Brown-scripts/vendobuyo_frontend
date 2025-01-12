@@ -41,7 +41,7 @@ function Checkout() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-200 shadow-lg rounded-md">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-md">
       <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-700">Checkout</h2>
       {error && (
         <div className="text-center bg-red-100 text-red-700 p-3 rounded-md mb-6">
@@ -66,26 +66,38 @@ function Checkout() {
           <h3 className="text-xl font-bold text-blue-600 mb-4">Order Summary</h3>
           <div className="bg-white rounded-lg shadow-md p-4">
             {cart.map((item) => (
-              <div key={item.id} className="flex justify-between border-b py-2">
+              <div key={item.id} className="flex items-center gap-2 justify-between border-b py-2">
+                <img src={item.imageUrl} className='w-10 h-10 rounded-lg' />
                 <span className="text-gray-800 font-medium">
-                  {item.title} x {item.quantity}
+                  {item.title}
                 </span>
-                <span className="text-gray-600 font-semibold">
+                <span className="text-gray-800 bg-teal-500 text-white mx-2 px-2 rounded-lg text-sm font-medium">
+                  x{item.quantity}
+                </span>
+                <span className="text-gray-800 font-bold">
                   ${(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
             ))}
-            <div className="font-semibold text-lg text-gray-900 mt-4">
-              Total: ${total.toFixed(2)}
+            <div className="font-black text-lg text-gray-900 mt-4">
+              <span className='font-semibold'>Total:</span> ${total.toFixed(2)}
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-all"
-        >
-          Place Order
-        </button>
+        <div className='flex gap-3'>
+          <button
+            onClick={() => { navigate("/cart") }}
+            className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-600 transition-all"
+          >
+            Back
+          </button>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-all"
+          >
+            Place Order
+          </button>
+        </div>
       </form>
     </div>
   );
