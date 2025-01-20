@@ -64,8 +64,8 @@ function Register() {
           );
         })}
       </div>
-      <div className="relative z-[2] bg-white mt-5 max-w-md mx-auto p-6 shadow-lg rounded-lg">
-        <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-6">
+      <div className="relative z-[2] bg-white mt-5 max-w-md mx-auto p-6 shadow-lg rounded-lg sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-6 sm:text-4xl md:text-5xl">
           Create Account
         </h2>
         {error && (
@@ -80,7 +80,7 @@ function Register() {
           <div>
             <label
               htmlFor="email"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-lg font-semibold text-gray-700 sm:text-xl"
             >
               Email
             </label>
@@ -96,7 +96,7 @@ function Register() {
           <div>
             <label
               htmlFor="password"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-lg font-semibold text-gray-700 sm:text-xl"
             >
               Password
             </label>
@@ -112,7 +112,7 @@ function Register() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-lg font-semibold text-gray-700 sm:text-xl"
             >
               Confirm Password
             </label>
@@ -128,7 +128,7 @@ function Register() {
           <div>
             <label
               htmlFor="role"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-lg font-semibold text-gray-700 sm:text-xl"
             >
               Role
             </label>
@@ -145,8 +145,8 @@ function Register() {
           <button
             type="submit"
             className={`w-full py-3 rounded-lg font-bold text-white transition-all ${loading
-                ? "bg-blue-300 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600"
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600"
               }`}
             disabled={loading}
           >

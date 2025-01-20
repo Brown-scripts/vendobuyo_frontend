@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import client from '../api/client';
+import client from "../api/client";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -12,13 +12,11 @@ function Products() {
       setLoading(true);
       setError(null);
       const token = localStorage.getItem("token");
-        const response = await client.get("/api/products", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-      // Assuming the data you want is in response.data
+      const response = await client.get("/api/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -87,7 +85,9 @@ function Products() {
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">
                   {product.title}
                 </h3>
-                <p className="text-gray-500 text-sm">{product.description}</p>
+                <p className="text-gray-500 text-sm">
+                  {product.description.substring(0, 50)}...
+                </p>
                 <p className="text-xl font-bold text-blue-600 mt-2">
                   ${product.price.toFixed(2)}
                 </p>

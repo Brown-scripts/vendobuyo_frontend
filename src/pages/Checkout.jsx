@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import client from '../api/client'
+import client from '../api/client';
 
 function Checkout() {
   const { cart, dispatch } = useCart();
@@ -41,8 +41,10 @@ function Checkout() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-md">
-      <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-700">Checkout</h2>
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-md">
+      <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-blue-700">
+        Checkout
+      </h2>
       {error && (
         <div className="text-center bg-red-100 text-red-700 p-3 rounded-md mb-6">
           {error}
@@ -66,12 +68,19 @@ function Checkout() {
           <h3 className="text-xl font-bold text-blue-600 mb-4">Order Summary</h3>
           <div className="bg-white rounded-lg shadow-md p-4">
             {cart.map((item) => (
-              <div key={item.id} className="flex items-center gap-2 justify-between border-b py-2">
-                <img src={item.imageUrl} className='w-10 h-10 rounded-lg' />
-                <span className="text-gray-800 font-medium">
+              <div
+                key={item.id}
+                className="flex flex-col sm:flex-row items-center gap-2 justify-between border-b py-2"
+              >
+                <img
+                  src={item.imageUrl}
+                  className="w-16 h-16 sm:w-12 sm:h-12 rounded-lg object-cover"
+                  alt={item.title}
+                />
+                <span className="text-center sm:text-left text-gray-800 font-medium">
                   {item.title}
                 </span>
-                <span className="text-gray-800 bg-teal-500 text-white mx-2 px-2 rounded-lg text-sm font-medium">
+                <span className="text-gray-800 bg-teal-500 text-white px-2 py-1 rounded-lg text-sm font-medium">
                   x{item.quantity}
                 </span>
                 <span className="text-gray-800 font-bold">
@@ -79,21 +88,21 @@ function Checkout() {
                 </span>
               </div>
             ))}
-            <div className="font-black text-lg text-gray-900 mt-4">
-              <span className='font-semibold'>Total:</span> ${total.toFixed(2)}
+            <div className="font-black text-lg text-gray-900 mt-4 text-center sm:text-right">
+              <span className="font-semibold">Total:</span> ${total.toFixed(2)}
             </div>
           </div>
         </div>
-        <div className='flex gap-3'>
+        <div className="flex flex-col gap-3 sm:flex-row">
           <button
-            onClick={() => { navigate("/cart") }}
-            className="w-full bg-rose-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-600 transition-all"
+            onClick={() => navigate('/cart')}
+            className="w-full sm:w-auto bg-rose-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-rose-600 transition-all"
           >
             Back
           </button>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-all"
+            className="w-full sm:w-auto bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition-all"
           >
             Place Order
           </button>

@@ -111,7 +111,6 @@ function SellerDashboard() {
     setIsEditModalOpen(true);
   };
 
-
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -163,7 +162,7 @@ function SellerDashboard() {
                           id="image-input"
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageChange(e)}
+                          onChange={handleImageChange}
                           className="hidden"
                         />
                       </div>
@@ -176,7 +175,7 @@ function SellerDashboard() {
                         />
                         <button
                           type="button"
-                          onClick={() => handleRemoveImage()}
+                          onClick={handleRemoveImage}
                           className="text-red-500 text-xs font-extrabold hover:text-red-600"
                         >
                           Remove Image
@@ -195,8 +194,8 @@ function SellerDashboard() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                <div className='flex gap-2'>
-                  <div className='flex-1'>
+                <div className="flex gap-2">
+                  <div className="flex-1">
                     <label className="block mb-2 text-lg font-semibold text-gray-700">Price</label>
                     <input
                       type="number"
@@ -206,7 +205,7 @@ function SellerDashboard() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div className='flex-1'>
+                  <div className="flex-1">
                     <label className="block mb-2 text-lg font-semibold text-gray-700">Stock Quantity</label>
                     <input
                       type="number"
@@ -251,10 +250,9 @@ function SellerDashboard() {
               <form onSubmit={handleUpdateProduct} className="space-y-6 mt-6 px-4">
                 <div>
                   <div className="flex">
-
                     <div className="flex flex-col items-center">
                       <img
-                        src={(editingProduct?.imageUrl)}
+                        src={editingProduct?.imageUrl}
                         alt="Preview"
                         className="w-24 h-24 object-cover mb-4 rounded-lg"
                       />
@@ -271,8 +269,8 @@ function SellerDashboard() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                <div className='flex gap-2'>
-                  <div className='flex-1'>
+                <div className="flex gap-2">
+                  <div className="flex-1">
                     <label className="block mb-2 text-lg font-semibold text-gray-700">Price</label>
                     <input
                       type="number"
@@ -282,7 +280,7 @@ function SellerDashboard() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div className='flex-1'>
+                  <div className="flex-1">
                     <label className="block mb-2 text-lg font-semibold text-gray-700">Stock Quantity</label>
                     <input
                       type="number"
@@ -315,62 +313,35 @@ function SellerDashboard() {
         </div>
       </Modal>
 
-      <Modal isOpen={isDeleteModalOpen}>
-        <div className="flex flex-col justify-start pt-10 px-[0.5rem] items-center w-screen h-screen overflow-y-auto bg-black/50 backdrop-blur-lg">
-
-          <div className="bg-white p-6 rounded shadow-md">
-            <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
-            <p>Are you sure you want to delete the product "{productToDelete?.title}"?</p>
-            <div className="mt-6 flex justify-end gap-4">
-              <button
-                onClick={() => setIsDeleteModalOpen(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={deleteProduct}
-                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
-
-      <div className="flex">
-        <button onClick={() => setIsAddModalOpen(true)} className="mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-          Add New Product
-        </button>
-      </div>
-      <div className="bg-white gap-4 border border-gray-300 shadow rounded-lg">
-        <div className="border-b border-gray-300 font-black p-4 rounded w-full grid grid-cols-5">
-          <div className="col-span-2">Product Name</div>
-          <div className="text-right">Unit Price</div>
-          <div className="text-right">Stock Quantity</div>
-          <div className="flex">
-            <div className="ml-auto">Actions</div>
-          </div>
-        </div>
+      {/* Products */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <div key={product._id} className="border-b border-gray-300 p-4 rounded w-full grid grid-cols-5">
-            <div className="font-semibold col-span-2">{product.title}</div>
-            <div className="text-right">${product.price.toFixed(2)}</div>
-            <div className="text-right">Stock: {product.stockQuantity}</div>
-            <div className="flex">
-              <button
-                onClick={() => handleEditProduct(product)}
-                className="ml-auto mr-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDeleteProduct(product)}
-                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-              >
-                Delete
-              </button>
+          <div key={product._id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img
+              src={product.imageUrl || 'https://via.placeholder.com/150'}
+              alt={product.title}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-xl font-semibold">{product.title}</h3>
+              <p className="text-gray-700 mt-2">{product.description}</p>
+              <div className="flex justify-between items-center mt-4">
+                <span className="text-lg font-bold text-blue-600">${product.price}</span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditProduct(product)}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-md"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => confirmDeleteProduct(product)}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}

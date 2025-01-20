@@ -60,7 +60,7 @@ function Profile() {
       <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">
         User Profile
       </h2>
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg mx-auto">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
         <p className="text-xl font-semibold text-gray-700 mb-4">
           <strong>Email:</strong> {user.email}
         </p>

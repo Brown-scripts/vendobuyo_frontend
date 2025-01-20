@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import client from '../api/client';
-import { randomColor } from '../utils/fxns'
+import { randomColor } from '../utils/fxns';
 import UserContext from '../context/UserContext';
 import { ROLES } from '../utils/constants';
 
@@ -16,20 +16,14 @@ function Login() {
   const fetchUserProfile = async (token) => {
     try {
       const response = await client.get("/api/auth/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      // Assuming the user data is in response.data
       setUserProfile(response.data);
-
-      return response.data
-
+      return response.data;
     } catch (error) {
       console.error("Error fetching user profile:", error);
       setError("Failed to load user profile. Please try again later.");
-      return null
+      return null;
     } finally {
       setLoading(false);
     }
@@ -41,23 +35,18 @@ function Login() {
     setError(null);
 
     try {
-      const response = await client.post('/api/auth/login', {
-        email,
-        password,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await client.post('/api/auth/login', { email, password }, {
+        headers: { 'Content-Type': 'application/json' },
       });
 
-      // Assuming the token is in response.data.token
       localStorage.setItem('token', response.data.token);
       setUser(response.data.token);
+
       const userData = await fetchUserProfile(response.data.token);
-      if (userData?.role == ROLES.buyer) {
+      if (userData?.role === ROLES.buyer) {
         navigate('/products');
       } else {
-        navigate('/sellerDashboard')
+        navigate('/sellerDashboard');
       }
     } catch (error) {
       setError('An error occurred during login. Please try again.');
@@ -67,14 +56,15 @@ function Login() {
   };
 
   return (
-    <div className='relative flex-1 bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden'>
-      <div className='absolute z-[1] w-full grid grid-cols-7 gap-y-20 flex-1'>
+    <div className="relative flex flex-col min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden px-4">
+      {/* Background text */}
+      <div className="absolute z-[1] w-full grid grid-cols-7 gap-y-20">
         {Array(480).fill(null).map((_, index) => {
-          const color = randomColor() // Generate a random color
+          const color = randomColor();
           return (
             <div
               key={index}
-              className={`transform text-2xl font-black rotate-[-30deg]`}
+              className="transform text-lg sm:text-xl font-black rotate-[-30deg]"
               style={{ color }}
             >
               VendoBuyo
@@ -82,21 +72,25 @@ function Login() {
           );
         })}
       </div>
-      <div className="relative max-w-md z-[2] mx-auto mt-20 p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-3xl font-extrabold text-center text-blue-600 mb-6">Start Shopping</h2>
+
+      {/* Form container */}
+      <div className="relative max-w-md w-full z-[2] mx-auto mt-16 sm:mt-20 p-6 bg-white shadow-lg rounded-lg">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-blue-600 mb-6">
+          Start Shopping
+        </h2>
         {error && (
           <div
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-6"
             role="alert"
           >
-            <span className="block sm:inline">{error}</span>
+            <span>{error}</span>
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-sm sm:text-lg font-semibold text-gray-700"
             >
               Email
             </label>
@@ -106,13 +100,13 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block mb-2 text-lg font-semibold text-gray-700"
+              className="block mb-2 text-sm sm:text-lg font-semibold text-gray-700"
             >
               Password
             </label>
@@ -122,12 +116,12 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
-            className={`w-full py-3 rounded-lg font-bold text-white transition-all ${loading
+            className={`w-full py-2 sm:py-3 rounded-lg font-bold text-white transition-all ${loading
               ? 'bg-blue-300 cursor-not-allowed'
               : 'bg-blue-500 hover:bg-blue-600'
               }`}

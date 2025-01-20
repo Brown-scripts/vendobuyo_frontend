@@ -61,7 +61,7 @@ Below is an overview of the architecture for VendoBuyo:
 
 3. **Run the Frontend**:
    ```bash
-   npm start
+   npm run dev
    ```
 
    The application will be accessible at `http://localhost:3000/`.
