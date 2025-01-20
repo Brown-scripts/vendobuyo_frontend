@@ -14,10 +14,13 @@ function Navbar() {
     <nav className="bg-white shadow-md">
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
+          {/* Logo and App Name */}
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <img className="h-10 w-auto" src="/logo.jpg" alt="Logo" />
+              <span className="ml-2 text-xl font-semibold text-gray-800">
+                VendoBuyo
+              </span>
             </Link>
           </div>
 
@@ -45,14 +48,7 @@ function Navbar() {
                   </Link>
                 )}
               </>
-            ) : (
-              <Link
-                to="/"
-                className="text-gray-500 hover:text-gray-700 px-3 py-2 text-base font-medium"
-              >
-                Home
-              </Link>
-            )}
+            ) : null}
           </div>
 
           {/* Auth Links */}
@@ -135,14 +131,7 @@ function Navbar() {
                     </Link>
                   )}
                 </>
-              ) : (
-                <Link
-                  to="/"
-                  className="block text-gray-500 hover:text-gray-700 px-3 py-2 text-base font-medium"
-                >
-                  Home
-                </Link>
-              )}
+              ) : null}
               {user ? (
                 <button
                   onClick={() => {
