@@ -1,37 +1,34 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-import client from "../api/client";
-import ShopFilter from "../components/ShopFilter";
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import client from '../api/client';
+import ShopFilter from '../components/ShopFilter';
 
-function Products() {
+function ShopProducts() {
+  const { shopid } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchProducts = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const token = localStorage.getItem("token");
-      const response = await client.get("/api/products", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      setError(
-        "Failed to fetch products. Please check your internet connection and try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await client.get(`/api/products/shop/${shopid}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProducts(response.data);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setError('Failed to fetch products. Please check your internet connection and try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProducts();
-  }, [fetchProducts]);
+  }, [shopid]);
 
   if (loading) {
     return (
@@ -46,7 +43,7 @@ function Products() {
       <div className="text-center py-10">
         <p className="text-red-600 mb-4 font-semibold">{error}</p>
         <button
-          onClick={fetchProducts}
+          onClick={() => fetchProducts()}
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
         >
           Retry
@@ -58,7 +55,7 @@ function Products() {
   return (
     <div className="container mx-auto px-6 py-8">
       <div className="flex justify-between items-center mb-8">
-        {/* <h2 className="text-3xl font-extrabold text-gray-800">Our Products</h2> */}
+        {/* <h2 className="text-3xl font-extrabold text-gray-800">Shop Products</h2> */}
         <ShopFilter />
       </div>
       {products.length === 0 ? (
@@ -102,4 +99,4 @@ function Products() {
   );
 }
 
-export default Products;
+export default ShopProducts;

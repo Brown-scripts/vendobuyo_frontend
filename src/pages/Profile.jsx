@@ -62,7 +62,13 @@ function Profile() {
       </h2>
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
         <p className="text-xl font-semibold text-gray-700 mb-4">
+          <strong>Name:</strong> {user.name}
+        </p>
+        <p className="text-xl font-semibold text-gray-700 mb-4">
           <strong>Email:</strong> {user.email}
+        </p>
+        <p className="text-xl font-semibold text-gray-700 mb-4">
+          <strong>Phone:</strong> {user.phone}
         </p>
         <p className="text-xl font-semibold text-gray-700 mb-4">
           <strong>Role:</strong> {user.role}

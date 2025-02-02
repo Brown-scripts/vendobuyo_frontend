@@ -80,7 +80,7 @@ function Checkout() {
                 <span className="text-center sm:text-left text-gray-800 font-medium">
                   {item.title}
                 </span>
-                <span className="text-gray-800 bg-teal-500 text-white px-2 py-1 rounded-lg text-sm font-medium">
+                <span className=" bg-teal-500 text-white px-2 py-1 rounded-lg text-sm font-medium">
                   x{item.quantity}
                 </span>
                 <span className="text-gray-800 font-bold">

@@ -7,6 +7,10 @@ import ProductDetail from './pages/ProductDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import OrdersPage from './pages/userOrders';
+import OrderDetailsPage from './pages/orderDetails';
+import SellersOrdersPage from './pages/sellerOrders';
+import ShopProducts from './pages/ShopProducts';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
@@ -68,12 +72,18 @@ function App() {
                           <Route path="/products" element={<Products />} />
                           <Route path="/products/:id" element={<ProductDetail />} />
                           <Route path="/profile" element={<Profile />} />
+                          <Route path="/orders" element={<OrdersPage />} />
+                          <Route path="/shop/:shopid" element={<ShopProducts />} />
+                          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
                           <Route path="/cart" element={<Cart />} />
                           <Route path="/checkout" element={<Checkout />} />
                           <Route path="/order-confirmation" element={<OrderConfirmation />} />
                           <Route path="*" element={<Navigate to={"/products"} />} />
                         </> :
                         <>
+                          <Route path="/seller/orders" element={<SellersOrdersPage />} />
+                          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+                          <Route path="/profile" element={<Profile />} />
                           <Route path="/seller-dashboard" element={<SellerDashboard />} />
                           <Route path="*" element={<Navigate to={"/seller-dashboard"} />} />
                         </>
